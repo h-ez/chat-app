@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha server.test.js"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +13,12 @@
   "dependencies": {
     "express": "^4.19.2",
     "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "assert": "^2.1.0",
+    "child_process": "^1.0.2",
+    "geckodriver": "^4.4.0",
+    "mocha": "^10.4.0",
+    "selenium-webdriver": "^4.20.0"
   }
 }
