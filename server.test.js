@@ -2,6 +2,7 @@
 // const { spawn } = require('node:child_process');
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
+const { Options } = require('selenium-webdriver/firefox');
 
 let serverProcess;
 let driver;
@@ -12,7 +13,8 @@ describe('Chat Server', function() {
 
   
     try {
-      driver = await new Builder().forBrowser('firefox').build();
+      let options = new firefox.Options("--headless")
+      driver = await new Builder().forBrowser('firefox').setFirefoxOptions(options.addArguments('--headless')).build();
       console.log('WebDriver initialized successfully'); // Add this line
     } catch (error) {
       console.error(`Error starting WebDriver: ${error.message}`);
