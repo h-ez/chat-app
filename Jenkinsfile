@@ -19,8 +19,13 @@ pipeline {
             }
         }
         stage('Deploy') {
+            environment {
+                DOCKER_REGS = credentials('docker-login')
+            }
+
             steps {
                 echo 'Deploying....'
+                sh 'docker login -u "$DOCKER_REGS_USR" -p "$DOCKER_REGS_PSW" docker.io'
                 sh 'docker push a01635715/chat-app:latest'
             }
         }
