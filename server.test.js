@@ -1,5 +1,5 @@
 // npm install -g geckodriver
-const { spawn } = require('node:child_process');
+// const { spawn } = require('node:child_process');
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
 
@@ -10,9 +10,6 @@ describe('Chat Server', function() {
   this.timeout(10000); // Set timeout to 10 seconds for all hooks and tests in this describe block
   before(async function() {
 
-    // Start the server
-    serverProcess = spawn('node', ['server.js']);
-  
     // Add error handling for the spawn command
     serverProcess.on('error', (error) => {
       console.error(`Error starting server: ${error.message}`);
