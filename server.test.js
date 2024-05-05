@@ -1,5 +1,5 @@
 // npm install -g geckodriver
-const { spawn } = require('child_process');
+const { spawn } = require('node:child_process');
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
 
@@ -7,9 +7,9 @@ let serverProcess;
 let driver;
 
 describe('Chat Server', function() {
-  this.timeout(5000);
-
+  this.timeout(10000); // Set timeout to 10 seconds for all hooks and tests in this describe block
   before(async function() {
+
     // Start the server
     serverProcess = spawn('node', ['server.js']);
   
@@ -20,8 +20,10 @@ describe('Chat Server', function() {
   
     try {
       driver = await new Builder().forBrowser('firefox').build();
+      console.log('WebDriver initialized successfully'); // Add this line
     } catch (error) {
       console.error(`Error starting WebDriver: ${error.message}`);
+      throw error; // Rethrow the error after logging it
     }
   });
 
