@@ -12,12 +12,24 @@ describe('Chat Server', function() {
   before(async function() {
     // Start the server
     serverProcess = spawn('node', ['server.js']);
-
-    driver = await new Builder().forBrowser('firefox').build();
+  
+    // Add error handling for the spawn command
+    serverProcess.on('error', (error) => {
+      console.error(`Error starting server: ${error.message}`);
+    });
+  
+    try {
+      driver = await new Builder().forBrowser('firefox').build();
+    } catch (error) {
+      console.error(`Error starting WebDriver: ${error.message}`);
+    }
   });
 
   after(async function() {
-    await driver.quit();
+    // Check if driver is defined before calling quit
+    if (driver) {
+      await driver.quit();
+    }
 
     // Stop the server
     serverProcess.kill('SIGTERM');
