@@ -21,7 +21,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh 'docker push chat-app:latest'
+                sh 'docker push a01635715/chat-app:latest'
             }
         }
     }
