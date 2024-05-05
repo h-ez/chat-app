@@ -2,7 +2,7 @@
 // const { spawn } = require('node:child_process');
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
-const { Options } = require('selenium-webdriver/firefox');
+const firefox = require('selenium-webdriver/firefox');
 
 let serverProcess;
 let driver;
@@ -10,8 +10,6 @@ let driver;
 describe('Chat Server', function() {
   this.timeout(10000); // Set timeout to 10 seconds for all hooks and tests in this describe block
   before(async function() {
-
-  
     try {
       let options = new firefox.Options("--headless")
       driver = await new Builder().forBrowser('firefox').setFirefoxOptions(options.addArguments('--headless')).build();
