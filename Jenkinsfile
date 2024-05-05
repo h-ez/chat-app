@@ -15,6 +15,7 @@ pipeline {
                 sh 'docker run -p 127.0.0.1:3000:3000 -d --name chat-app-container chat-app:latest'
                 sh 'npm test'
                 sh 'docker stop chat-app-container'
+                sh 'docker rm chat-app-container'
             }
         }
         stage('Deploy') {
