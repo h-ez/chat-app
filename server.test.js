@@ -10,10 +10,6 @@ describe('Chat Server', function() {
   this.timeout(10000); // Set timeout to 10 seconds for all hooks and tests in this describe block
   before(async function() {
 
-    // Add error handling for the spawn command
-    serverProcess.on('error', (error) => {
-      console.error(`Error starting server: ${error.message}`);
-    });
   
     try {
       driver = await new Builder().forBrowser('firefox').build();
@@ -31,7 +27,6 @@ describe('Chat Server', function() {
     }
 
     // Stop the server
-    serverProcess.kill('SIGTERM');
   });
 
   it('should open chat and send a Test message', async function() {
