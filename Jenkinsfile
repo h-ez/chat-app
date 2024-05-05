@@ -6,6 +6,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'docker build -t chat-app:latest .'
+                sh 'npm install mocha'
             }
         }
         stage('Test') {
