@@ -14,8 +14,10 @@ node {
     }
     stage('Deploy') {
         echo 'Deploying....'
-        docker.withRegistry('docker.io/chat-app', 'docker-login') {
-            chatAppImage.push()
+        withEnv(["DOCKER+REGS=credentials('docker-login')"]) {
+            docker.withRegistry( '', DOCKER_REGS ) {
+                chatAppImage.push()
+            }
         }
     }
 }
