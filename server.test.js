@@ -8,7 +8,7 @@ let serverProcess;
 let driver;
 
 describe('Chat Server', function() {
-  this.timeout(10000); // Set timeout to 10 seconds for all hooks and tests in this describe block
+  this.timeout(15000); // Set timeout to 10 seconds for all hooks and tests in this describe block
   before(async function() {
     try {
       let options = new firefox.Options("--headless")

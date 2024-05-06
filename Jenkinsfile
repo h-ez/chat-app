@@ -52,6 +52,8 @@ node {
         //     sh 'mvn -B verify'
         // }
 
-        chatAppImage.push()
+        docker.withRegistry('', 'docker-login') {
+            chatAppImage.push()
+        }
     }
 }
