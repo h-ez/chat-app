@@ -1,4 +1,5 @@
 node {
+    checkout scm
     stage('Build') {
         echo 'Building....'
         chatAppImage = docker.build("a01635715/chat-app:latest")
