@@ -15,7 +15,7 @@ node {
     stage('Deploy') {
         echo 'Deploying....'
         withEnv(["DOCKER+REGS=credentials('docker-login')"]) {
-            docker.withRegistry( '', DOCKER_REGS ) {
+            docker.withRegistry( '', $DOCKER_REGS ) {
                 chatAppImage.push()
             }
         }
