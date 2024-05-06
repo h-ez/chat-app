@@ -36,7 +36,7 @@ node {
     stage('Build') {
         echo 'Building....'
         // sh 'docker build -t a01635715/chat-app:latest .'
-        def chatAppImage = docker.build("a01635715/chat-app:latest")
+        chatAppImage = docker.build("a01635715/chat-app:latest")
         sh 'npm install'
     }
     stage('Test') {
