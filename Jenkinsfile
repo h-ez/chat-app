@@ -48,13 +48,11 @@ node {
     }
     stage('Deploy') {
         echo 'Deploying....'
-        // withEnv(["DOCKER_REGS=credentials('docker-login')"]) {
-        //     sh 'mvn -B verify'
-        // }
         // test push 2
-
-        docker.withRegistry('', 'docker-login') {
-            chatAppImage.push()
+        withEnv(["DOCKER_REGS=credentials('docker-login')"]) {
+            docker.withRegistry('', '$DOCKER_REGS') {
+                chatAppImage.push()
+            }
         }
     }
 }
