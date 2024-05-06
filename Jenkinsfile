@@ -13,7 +13,7 @@ node {
     }
     stage('Deploy') {
         echo 'Deploying....'
-        docker.withDockerRegistry('', 'docker-login') {
+        docker.withRegistry('', 'docker-login') {
             chatAppImage.push()
         }
     }
