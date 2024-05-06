@@ -51,7 +51,7 @@ node {
         // withEnv(["DOCKER_REGS=credentials('docker-login')"]) {
         //     sh 'mvn -B verify'
         // }
-        // test push
+        // test push 2
 
         docker.withRegistry('', 'docker-login') {
             chatAppImage.push()
