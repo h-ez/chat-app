@@ -49,10 +49,10 @@ node {
     stage('Deploy') {
         echo 'Deploying....'
         // test push 4
-        withEnv(["DOCKER_REGS=credentials('docker-login')"]) {
-            docker.withRegistry('', '$DOCKER_REGS') {
-                chatAppImage.push()
-            }
+        // withEnv(["DOCKER_REGS=credentials('docker-login')"]) {
+        // }
+        docker.withDockerRegistry('', 'docker-login') {
+            chatAppImage.push()
         }
     }
 }
