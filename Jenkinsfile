@@ -1,22 +1,43 @@
-node {
-    checkout scm
-    stage('Build') {
-        echo 'Building....'
-        chatAppImage = docker.build("a01635715/chat-app:latest")
-        sh 'npm install'
+pipeline {
+    environment {
+        registry = "a01635715/chat-app"
+        registryCredential = 'docker-login'
+        chatAppImage = ''
     }
-    stage('Test') {
-        echo 'Testing....'
-        sh 'docker run -p 127.0.0.1:3000:3000 -d --name chat-app-container a01635715/chat-app:latest'
-        sh 'npm test'
-        sh 'docker stop chat-app-container'
-        sh 'docker rm chat-app-container'
-    }
-    stage('Deploy') {
-        echo 'Deploying....'
-        withEnv(["DOCKER+REGS=credentials('docker-login')"]) {
-            docker.withRegistry( '', $DOCKER_REGS ) {
-                chatAppImage.push()
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building....'
+                script {
+                    chatAppImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+                sh 'npm install'
+            }
+        }
+        stage('Test') {
+            steps{
+                echo 'Testing....'
+                sh 'docker run -p 127.0.0.1:3000:3000 -d --name chat-app-container a01635715/chat-app:latest'
+                sh 'npm test'
+                sh 'docker stop chat-app-container'
+                sh 'docker rm chat-app-container'
+            }
+        }
+        stage('Deploy') {
+            steps{
+                echo 'Deploying....'
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        chatAppImage.push('latest')
+                    }
+                }
+            }
+        }
+        stage('Cleaning up') {
+            steps{
+                echo 'Cleaning up....'
+                sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
     }
