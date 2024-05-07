@@ -28,7 +28,7 @@ pipeline {
             steps{
                 echo 'Deploying....'
                 script {
-                    docker.withRegistry( registryCredential ) {
+                    docker.withRegistry( 'https://registry.hub.docker.com', 'docker-login' ) {
                         chatAppImage.push('latest')
                     }
                 }
