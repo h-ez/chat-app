@@ -36,4 +36,34 @@ describe('Chat Server', function() {
     let text = await message.getText();
     assert.equal(text, 'Test message');
   });
+
+  it('should have the correct title', async function() {
+    await driver.get('http://localhost:3000');
+    let title = await driver.getTitle();
+    assert.equal(title, 'Socket.IO chat');
+  });
+
+  it('should send a sql query and not affect anything', async function() {
+    await driver.get('http://localhost:3000');
+    await driver.findElement(By.id('input')).sendKeys('DROP TABLE', Key.RETURN);
+    let message = await driver.wait(until.elementLocated(By.xpath('//li[contains(text(), \'DROP TABLE\')]')), 1000);
+    let text = await message.getText();
+    assert.equal(text, 'DROP TABLE');
+  });
+
+  it('should send a linux command and not affect anything', async function() {
+    await driver.get('http://localhost:3000');
+    await driver.findElement(By.id('input')).sendKeys('pwd', Key.RETURN);
+    let message = await driver.wait(until.elementLocated(By.xpath('//li[contains(text(), \'pwd\')]')), 1000);
+    let text = await message.getText();
+    assert.equal(text, 'pwd');
+  });
+
+  it('should send a ipconfig command text and not perform it', async function() {
+    await driver.get('http://localhost:3000');
+    await driver.findElement(By.id('input')).sendKeys('ipconfig', Key.RETURN);
+    let message = await driver.wait(until.elementLocated(By.xpath('//li[contains(text(), \'ipconfig\')]')), 1000);
+    let text = await message.getText();
+    assert.equal(text, 'ipconfig');
+  });
 });
